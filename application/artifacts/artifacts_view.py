@@ -14,6 +14,7 @@ from application.artifacts.artifact_creation import ArtifactCreator
 from application.artifacts.artifact_schema import ARTIFACT_SCHEMA, ARTIFACTS_SCHEMA
 from application.artifacts.elastic import ElasticSearcher
 from application.artifacts.synonyms import SynonymGenerator
+from application.artifacts.text_processing import TextProcessingPipeline
 from application.errors import check_es_connection
 from application.extensions import socketio
 from application.responders import marshal_data, no_content
@@ -46,7 +47,13 @@ def _socketio_data(artifacts, search):
 def _search_artifacts(params):
     search_args = params.get("search")
     if search_args is not None:
-        params["synonyms"] = SynonymGenerator(search_args).get_synonyms()
+        #synonyms = SynonymGenerator(search_args).get_synonyms()
+        pipe = TextProcessingPipeline(search_args)
+        synonyms = pipe.run()
+        print('########## SYNONYMS')
+        print(synonyms)
+        print(type(synonyms))
+        params["synonyms"] = synonyms
         elastic_artifacts = ElasticSearcher.build_artifact_searcher(params).search()
         artifacts = []
         for elastic_artifact in elastic_artifacts:

@@ -1,0 +1,8 @@
+// pipeline
+digraph {
+	extract [shape=rectangle]
+	load [shape=rectangle]
+	transform [shape=rectangle]
+	extract -> transform
+	transform -> load
+}
