@@ -14,7 +14,7 @@ from application.artifacts.artifact_creation import ArtifactCreator
 from application.artifacts.artifact_schema import ARTIFACT_SCHEMA, ARTIFACTS_SCHEMA
 from application.artifacts.elastic import ElasticSearcher
 from application.artifacts.synonyms import SynonymGenerator
-from application.artifacts.text_processing import TextProcessingPipeline
+from application.artifacts.text_processing.pipeline import TextProcessingPipeline
 from application.errors import check_es_connection
 from application.extensions import socketio
 from application.responders import marshal_data, no_content

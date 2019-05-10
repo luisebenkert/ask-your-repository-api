@@ -1,10 +1,8 @@
 from consecution import Node, Pipeline, GlobalState
-from textblob import TextBlob
+from textblob import TextBlob, Word
 
-class LogNode(Node):
-  def process(self, item):
-    print('{} processing {}'.format(self.name, item))
-    self.push(item)
+from application.artifacts.text_processing.spellcheck import Spellcheck
+from application.artifacts.text_processing.part_of_speech_filter import PartOfSpeechFilter
 
 class Consumer(Node):
   def process(self, item):
@@ -30,9 +28,9 @@ class TextProcessingPipeline:
     global_state = GlobalState(result='')
     pipe = Pipeline(
       Consumer('Consumer') |
-      LogNode('Consumer was') |
-      Producer('Producer') |
-      LogNode('Producer was'),
+      Spellcheck('Spellcheck') |
+      PartOfSpeechFilter('Part of Speech Filter') |
+      Producer('Producer'),
       global_state=global_state
     )
     pipe.consume(self.data)
