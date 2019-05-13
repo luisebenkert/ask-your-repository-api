@@ -1,26 +1,12 @@
 from consecution import Node
 from textblob import Word, TextBlob, blob
 import nltk
-from application.artifacts.text_processing.utils import get_word, get_blob, get_string
-from application.artifacts.text_processing.variables import nouns, verbs, ad_words, wh_words, pronouns, foreign, number, others
+from application.artifacts.text_processing.utils import get_word, to_wordnet
+from application.artifacts.text_processing.variables import LEMMATIZATION_FUNCTION
 
 class Lemmatization(Node):
   def _calculate_prio(self, old_prio, new_prio):
-    return max([old_prio, new_prio])
-
-  def to_wordnet(self, tag=None):
-    """Converts a Penn corpus tag into a Wordnet tag."""
-    _wordnet = blob._wordnet
-    if tag in ("NN", "NNS", "NNP", "NNPS"):
-      return _wordnet.NOUN
-    elif tag in ("JJ", "JJR", "JJS"):
-      return _wordnet.ADJ
-    elif tag in ("VB", "VBD", "VBG", "VBN", "VBP", "VBZ"):
-      return _wordnet.VERB
-    elif tag in ("RB", "RBR", "RBS"):
-      return _wordnet.ADV
-    else:
-      return _wordnet.NOUN
+    return LEMMATIZATION_FUNCTION
 
   def process(self, item):
     words = get_word(item)
@@ -30,7 +16,7 @@ class Lemmatization(Node):
       string = ''.join(word)
       blob = TextBlob(string)
       tag = blob.tags[0][1]   
-      pos = self.to_wordnet(tag)      
+      pos = to_wordnet(tag)      
       new_word = str(word.lemmatize(pos))
       if new_word != word:
         if new_word in item:

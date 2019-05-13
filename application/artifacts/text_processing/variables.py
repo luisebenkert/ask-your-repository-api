@@ -1,4 +1,5 @@
 import math
+from nltk.stem import PorterStemmer, SnowballStemmer
 
 #### SPELLCHECK ####
 SPELLCHECK_MIN_CONFIDENCE = 0.01
@@ -28,7 +29,22 @@ PART_OF_SPEECH_PRIORITY_FACTOR = [
 
 PART_OF_SPEECH_PRIORITY_FUNCTION = lambda c, p: c * p
 
-#### FILTER ####
-FILTER_MIN_PRIORITY = 0.5
+#### PRIORITY FILTER ####
+PRIORITY_FILTER_MIN_PRIORITY = 0.2
+PRIORITY_FILTER_MIN_AMOUNT = 5
+PRIORITY_FILTER_FUNCTION = lambda p: p < PRIORITY_FILTER_MIN_PRIORITY
 
-FILTER_FUNCTION = lambda p: p < FILTER_MIN_PRIORITY
+#### STEMMING ####
+STEMMERS = {
+      'PORTER': PorterStemmer(),
+      'SNOWBALL': SnowballStemmer('english'),
+    }
+STEMMER = 'SNOWBALL' # alternative: 'PORTER'
+
+#### LEMMATIZATION ####
+LEMMATIZATION_FUNCTION = lambda o, n: max([o, n])
+
+#### SYNONYMS ####
+INVALID_CHARACTERS = ['-', '_']
+SYNONYMS_MIN_SIMILARITY = 0
+SYNONYMS_PRIORITY_FUNCTION = lambda s: s * 0.8
