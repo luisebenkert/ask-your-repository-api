@@ -35,7 +35,7 @@ class Synonyms(Node):
       if new_set is None:
         continue
       similarity = original_set.path_similarity(new_set)
-      if similarity >= SYNONYMS_MIN_SIMILARITY:
+      if similarity and similarity >= SYNONYMS_MIN_SIMILARITY:
         result.append([element, similarity])
     return result
     

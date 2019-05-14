@@ -1,5 +1,8 @@
 from textblob import Word, TextBlob, blob
+from application.artifacts.text_processing.variables import FILE_PATH
 import nltk
+import json
+import datetime
 
 def get_word(list):
   result = []
@@ -22,7 +25,7 @@ def combine_priorities(old_prio, new_prio):
   print(old_prio)
   print(new_prio)
 
-def to_wordnet(self, tag=None):
+def to_wordnet(tag=None):
   """Converts a Penn corpus tag into a Wordnet tag."""
   _wordnet = blob._wordnet
   if tag in ("NN", "NNS", "NNP", "NNPS"):
@@ -35,3 +38,30 @@ def to_wordnet(self, tag=None):
     return _wordnet.ADV
   else:
     return _wordnet.NOUN
+
+def to_json(pipeline, output, input):
+  date = datetime.datetime.now().strftime('%m%d_%H%M')
+  words = input[0].split()  
+  search_terms = ''
+  for element in words:
+    search_terms += '_' + element
+  filename = date + search_terms
+  path = FILE_PATH + '/' + filename + '.json'
+  
+  data = {
+    'original': words,
+    'processed': output
+  }
+
+  try:
+    with open(path, 'w') as outfile:
+      json.dump(data, outfile)
+  except FileNotFoundError:
+    print('File could not be found.')
+  except:
+    print('An error occured. File was not created.')
+  else:
+    print('File was successfully created.')
+
+def sort_dict(dict):
+  return sorted(dict.items(), key=lambda element: (-element[1]['priority'], -element[1]['amount']))

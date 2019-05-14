@@ -1,6 +1,9 @@
 import math
 from nltk.stem import PorterStemmer, SnowballStemmer
 
+#### JSON EXPORT ####
+FILE_PATH = './.__data'
+
 #### SPELLCHECK ####
 SPELLCHECK_MIN_CONFIDENCE = 0.01
 SPELLCHECK_PRIORITY_FACTOR = 0.25
