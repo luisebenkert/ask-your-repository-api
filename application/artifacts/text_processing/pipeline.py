@@ -2,6 +2,7 @@ from consecution import Node, Pipeline, GlobalState
 from textblob import TextBlob, Word
 
 from application.artifacts.text_processing import Spellcheck, PartOfSpeechFilter, Lemmatization, PriorityFilter, Stemming, Synonyms
+from application.artifacts.text_processing.variables import ALL_VARIABLES
 from application.artifacts.text_processing.utils import get_string, combine_priorities, to_json, sort_dict
 
 class Log(Node):
@@ -68,7 +69,7 @@ class TextProcessingPipeline:
 
   def run(self):
     global_state = GlobalState(string='', dictionary={})
-    stages1 = [      
+    stages = [      
       Spellcheck('Spellcheck'),
       PartOfSpeechFilter('Part of Speech Filter'),
       Synonyms('Synonyms'),
@@ -77,8 +78,8 @@ class TextProcessingPipeline:
       Stemming('Stemming'),
     ]
 
-    pipeline = self._get_pipeline(stages1, True)
+    pipeline = self._get_pipeline(stages, True)
     pipe = Pipeline(pipeline, global_state=global_state)
     pipe.consume(self.data)
-    to_json(pipe, global_state.dictionary, self.data)
+    to_json(stages, global_state.dictionary, self.data, ALL_VARIABLES)
     return global_state.string

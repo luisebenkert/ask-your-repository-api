@@ -1,5 +1,5 @@
 from textblob import Word, TextBlob, blob
-from application.artifacts.text_processing.variables import FILE_PATH
+from application.artifacts.text_processing.variables import *
 import nltk
 import json
 import datetime
@@ -39,7 +39,7 @@ def to_wordnet(tag=None):
   else:
     return _wordnet.NOUN
 
-def to_json(pipeline, output, input):
+def to_json(pipeline, output, input, vars):
   date = datetime.datetime.now().strftime('%m%d_%H%M')
   words = input[0].split()  
   search_terms = ''
@@ -47,8 +47,15 @@ def to_json(pipeline, output, input):
     search_terms += '_' + element
   filename = date + search_terms
   path = FILE_PATH + '/' + filename + '.json'
-  
+
+  stages = {}
+  for item in pipeline:
+    item = str(item)
+    stage = item[item.find("(")+1:item.find(")")]
+    stages[stage] = vars[stage]
+
   data = {
+    'pipeline': stages,
     'original': words,
     'processed': output
   }
@@ -62,6 +69,7 @@ def to_json(pipeline, output, input):
     print('An error occured. File was not created.')
   else:
     print('File was successfully created.')
+  print()
 
 def sort_dict(dict):
   return sorted(dict.items(), key=lambda element: (-element[1]['priority'], -element[1]['amount']))
