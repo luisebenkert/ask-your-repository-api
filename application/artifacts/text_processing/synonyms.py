@@ -30,6 +30,8 @@ class Synonyms(Node):
   def get_best_synonyms(self, word, synonyms):
     result = []
     original_set = self.get_exact_synset(word)
+    if original_set is None:
+      return result
     for element in synonyms:        
       new_set = self.get_exact_synset(element)
       if new_set is None:

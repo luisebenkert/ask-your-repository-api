@@ -78,8 +78,9 @@ class TextProcessingPipeline:
       Stemming('Stemming'),
     ]
 
-    pipeline = self._get_pipeline(stages, True)
+    pipeline = self._get_pipeline(stages, True)    
     pipe = Pipeline(pipeline, global_state=global_state)
     pipe.consume(self.data)
     to_json(stages, global_state.dictionary, self.data, ALL_VARIABLES)
-    return global_state.string
+
+    return global_state.dictionary

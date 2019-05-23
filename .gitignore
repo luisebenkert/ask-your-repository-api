@@ -12,3 +12,5 @@ htmlcov
 credentials.json
 clientIds.json
 search_query.log
+.__data/
+dataset/

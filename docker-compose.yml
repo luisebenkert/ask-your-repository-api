@@ -15,7 +15,7 @@ services:
     environment:
       - NEO4J_AUTH=none
     volumes:
-      - $HOME/neo4j/data:/data
+      - ./dataset:/data
     ports:
      - "7687:7687"
      - "6479:6479"

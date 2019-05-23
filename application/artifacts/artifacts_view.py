@@ -49,10 +49,16 @@ def _search_artifacts(params):
     if search_args is not None:
         #synonyms = SynonymGenerator(search_args).get_synonyms()
         pipe = TextProcessingPipeline(search_args)
-        synonyms = pipe.run()
+        processed = pipe.run()
+        keys = []
+        for key in processed:
+            keys.append(key)
+        synonyms = ' '.join(keys)
+
         print('-------- SYNONYMS --------')
         print(synonyms)
         print()
+        
         params["synonyms"] = synonyms
         elastic_artifacts = ElasticSearcher.build_artifact_searcher(params).search()
         artifacts = []
