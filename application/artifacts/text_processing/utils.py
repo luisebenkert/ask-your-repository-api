@@ -69,7 +69,6 @@ def to_json(pipeline, output, input, vars):
     print('An error occured. File was not created.')
   else:
     print('File was successfully created.')
-  print()
 
 def sort_dict(dict):
   return sorted(dict.items(), key=lambda element: (-element[1]['priority'], -element[1]['amount']))

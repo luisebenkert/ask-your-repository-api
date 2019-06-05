@@ -12,8 +12,10 @@ def create_routes(app):
     from application.password_resets.password_resets_routes import PASSWORD_RESETS
     from application.presentations.presentations_routes import PRESENTATIONS
     from application.invites.invites_routes import INVITES
+    from application.evaluation.evaluation_routes import EVALUATION
     from application.artifacts.tags.tags_view import TagsView
 
+    app.register_blueprint(EVALUATION, url_prefix="/evaluation")
     app.register_blueprint(ARTIFACTS, url_prefix="/images")
     app.register_blueprint(USERS, url_prefix="/users")
     app.register_blueprint(TEAMS, url_prefix="/teams")
