@@ -46,7 +46,7 @@ def to_json(pipeline, output, input, vars):
   for element in words:
     search_terms += '_' + element
   filename = date + search_terms
-  path = FILE_PATH + '/' + filename + '.json'
+  path = FILE_PATH + '/nlp_results/' + filename + '.json'
 
   stages = {}
   for item in pipeline:
