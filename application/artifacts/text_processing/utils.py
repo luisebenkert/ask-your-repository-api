@@ -39,14 +39,19 @@ def to_wordnet(tag=None):
   else:
     return _wordnet.NOUN
 
-def to_json(pipeline, output, input, vars):
+teams = {
+  '8d1fbcfe-aae9-4f05-971e-da144b72f699': 'testSet1',
+  'ba2340a3-e798-4956-baf2-4ba6c76a074f': 'testSet2',
+}
+
+def to_json(pipeline, output, input, team, vars):
   date = datetime.datetime.now().strftime('%m%d_%H%M')
   words = input[0].split()  
   search_terms = ''
   for element in words:
     search_terms += '_' + element
-  filename = date + search_terms
-  path = FILE_PATH + '/nlp_results/' + filename + '.json'
+  filename = 'results_' + date + search_terms
+  path = FILE_PATH + '/' + teams[str(team)] + '/' + filename + '.json'
 
   stages = {}
   for item in pipeline:

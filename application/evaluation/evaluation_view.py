@@ -16,19 +16,13 @@ class EvaluationView(MethodResource):  # pylint:disable=too-few-public-methods
     data = json.loads(json.loads(request.data)['evaluationSet'])
     eval_type = data["type"]
     eval_set = data["set"]
+    eval_name = data["name"]
 
     for item in eval_set:
-      date = datetime.datetime.now().strftime('%m%d_%H%M')
-      if eval_type == 'ranking':
-        name = item["searchterms"]
-        filename = date + '_'.join(name)
-      elif eval_type == 'search_terms':        
-        name = item["image"]
-        filename = date + '_' + name
-      else:
-        return False
-      
-      path = './.__data/user_input/' + eval_type + '/' + filename + '.json'
+      date = datetime.datetime.now().strftime('%m%d_%H%M')      
+      name = item["searchterms"]
+      filename = eval_type + '_' + date + '_' + '_'.join(name)
+      path = './.__data/' + eval_name + '/' + filename + '.json'
 
       try:
         with open(path, 'w') as outfile:

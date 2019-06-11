@@ -54,7 +54,10 @@ class Producer(Node):
 
 class TextProcessingPipeline:
   def __init__(self, *args):
-    self.data = args
+    print(args)
+    self.data = []
+    self.data.append(args[0]["search_args"])
+    self.team = args[0]["team_id"]
 
   def _get_pipeline(self, stages, log = False):
     pipe = (Consumer('Consumer') | Log('Consumer Log'))
@@ -81,6 +84,6 @@ class TextProcessingPipeline:
     pipeline = self._get_pipeline(stages, True)    
     pipe = Pipeline(pipeline, global_state=global_state)
     pipe.consume(self.data)
-    to_json(stages, global_state.dictionary, self.data, ALL_VARIABLES)
+    to_json(stages, global_state.dictionary, self.data, self.team, ALL_VARIABLES)
 
     return global_state.dictionary

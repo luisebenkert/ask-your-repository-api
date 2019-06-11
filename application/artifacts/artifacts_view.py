@@ -43,16 +43,19 @@ def _socketio_data(artifacts, search):
     data["search"] = search
     return data
 
-
 def _search_artifacts(params):
+    team_id = params.get("team_id")
     search_args = params.get("search")
     if search_args is not None:
         #synonyms = SynonymGenerator(search_args).get_synonyms()
-        pipe = TextProcessingPipeline(search_args)
+        pipe = TextProcessingPipeline({
+            'search_args': search_args,
+            'team_id': team_id,
+        })
         processed = pipe.run()
         keys = []
         for key in processed:
-            keys.append(key)
+            keys.append(key[0])
         synonyms = ' '.join(keys)
 
         print('-------- SYNONYMS --------')
