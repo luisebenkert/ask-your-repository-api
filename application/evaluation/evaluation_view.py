@@ -20,13 +20,19 @@ class EvaluationView(MethodResource):  # pylint:disable=too-few-public-methods
 
     for item in eval_set:
       date = datetime.datetime.now().strftime('%m%d_%H%M')      
-      name = item["searchterms"]
-      filename = eval_type + '_' + date + '_' + '_'.join(name)
+      if eval_type == "relevance":
+        filename = eval_type + '_' + date
+      else:  
+        name = item["searchterms"]
+        filename = eval_type + '_' + date + '_' + '_'.join(name)
       path = './.__data/' + eval_name + '/' + filename + '.json'
 
       try:
         with open(path, 'w') as outfile:
-          json.dump(item, outfile)
+          if eval_type == "relevance":
+            json.dump(eval_set, outfile)
+          else:
+            json.dump(item, outfile)
       except FileNotFoundError:
         print('File could not be found.')
       except:

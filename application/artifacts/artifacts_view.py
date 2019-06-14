@@ -47,6 +47,7 @@ def _search_artifacts(params):
     team_id = params.get("team_id")
     search_args = params.get("search")
     if search_args is not None:
+        print(search_args)
         #synonyms = SynonymGenerator(search_args).get_synonyms()
         pipe = TextProcessingPipeline({
             'search_args': search_args,

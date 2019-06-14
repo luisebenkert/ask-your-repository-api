@@ -72,7 +72,15 @@ class TextProcessingPipeline:
 
   def run(self):
     global_state = GlobalState(string='', dictionary={})
-    stages = [      
+    stages1 = [      
+      Spellcheck('Spellcheck'),
+      PartOfSpeechFilter('Part of Speech Filter'),
+      Synonyms('Synonyms'),
+      PriorityFilter('Priority Filter'),
+      Lemmatization('Lemmatization'),
+      Stemming('Stemming'),
+    ]
+    stages2 = [      
       Spellcheck('Spellcheck'),
       PartOfSpeechFilter('Part of Speech Filter'),
       Synonyms('Synonyms'),
@@ -81,9 +89,9 @@ class TextProcessingPipeline:
       Stemming('Stemming'),
     ]
 
-    pipeline = self._get_pipeline(stages, True)    
+    pipeline = self._get_pipeline(stages1, True)    
     pipe = Pipeline(pipeline, global_state=global_state)
     pipe.consume(self.data)
-    to_json(stages, global_state.dictionary, self.data, self.team, ALL_VARIABLES)
+    to_json(stages1, global_state.dictionary, self.data, self.team, ALL_VARIABLES)
 
     return global_state.dictionary

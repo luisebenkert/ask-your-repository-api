@@ -4,7 +4,12 @@
 class ArtifactSearchBuilder:  # pylint:disable=too-few-public-methods
     """Builds elasticsearch search request bodies"""
 
-    SEARCH_CONFIG = {"text_prio": 1, "label_prio": 2, "user_prio": 5, "synonyms_multiplier": 0.3}
+    SEARCH_CONFIG = {
+        "text_prio": 1,
+        "label_prio": 1,
+        "user_prio": 1,
+        "synonyms_multiplier": 1,
+    }
 
     def __init__(
         self,
