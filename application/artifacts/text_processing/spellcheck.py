@@ -15,7 +15,7 @@ class Spellcheck(Node):
         word = element[0]
         confidence = element[1]
         if confidence > SPELLCHECK_MIN_CONFIDENCE:          
-          prio = self._calculate_priority(confidence)             
+          prio = self._calculate_priority(confidence)
           if word in item:
             item[word]['priority'] = prio
             item[word]['amount'] = item.get(word).get('amount') + 1

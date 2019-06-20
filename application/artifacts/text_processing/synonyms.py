@@ -64,4 +64,5 @@ class Synonyms(Node):
           'priority': SYNONYMS_PRIORITY_FUNCTION(similarity), 
           'amount': 1
         }
+
     self.push(item)

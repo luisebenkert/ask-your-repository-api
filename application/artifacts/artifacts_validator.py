@@ -16,6 +16,7 @@ def search_args():
         "search": fields.String(missing=None),
         "team_id": fields.UUID(missing=None),
         "types": fields.String(load_from="type", missing="image"),
+        "pipeline": fields.Integer(),
         "start_date": fields.DateTime(),
         "end_date": fields.DateTime(),
         "offset": fields.Integer(missing=0),

@@ -46,24 +46,23 @@ def _socketio_data(artifacts, search):
 def _search_artifacts(params):
     team_id = params.get("team_id")
     search_args = params.get("search")
+    print(search_args)
+    print(type(search_args))
+    pipeline = params.get("pipeline") or 1
+
     if search_args is not None:
-        print(search_args)
         #synonyms = SynonymGenerator(search_args).get_synonyms()
         pipe = TextProcessingPipeline({
             'search_args': search_args,
             'team_id': team_id,
+            'pipeline': pipeline,
         })
         processed = pipe.run()
-        keys = []
-        for key in processed:
-            keys.append(key[0])
-        synonyms = ' '.join(keys)
 
-        print('-------- SYNONYMS --------')
-        print(synonyms)
-        print()
-        
-        params["synonyms"] = synonyms
+        print('#####')
+        print(processed)
+
+        params["synonyms"] = processed
         elastic_artifacts = ElasticSearcher.build_artifact_searcher(params).search()
         artifacts = []
         for elastic_artifact in elastic_artifacts:
@@ -75,6 +74,8 @@ def _search_artifacts(params):
                 # neo and elasticsearch are out of sync so add a resync job
                 resync_elasticsearch_eventually()
     else:
+        print('##### ARTIFACTS ######')
+        print(artifacts)
         artifacts = _find_multiple_by(params)
     return artifacts
 

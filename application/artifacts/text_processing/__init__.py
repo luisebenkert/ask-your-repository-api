@@ -4,3 +4,4 @@ from application.artifacts.text_processing.lemmatization import Lemmatization
 from application.artifacts.text_processing.priority_filter import PriorityFilter
 from application.artifacts.text_processing.stemming import Stemming
 from application.artifacts.text_processing.synonyms import Synonyms
+from application.artifacts.text_processing.outer_synonyms import OuterSynonyms

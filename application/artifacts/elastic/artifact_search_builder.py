@@ -5,11 +5,11 @@ class ArtifactSearchBuilder:  # pylint:disable=too-few-public-methods
     """Builds elasticsearch search request bodies"""
 
     SEARCH_CONFIG = {
-        "text_prio": 1,
+        "text_prio": 0,
         "label_prio": 1,
-        "user_prio": 1,
-        "synonyms_multiplier": 1,
-    }
+        "user_prio": 0,
+        "synonyms_multiplier": 1
+        }
 
     def __init__(
         self,
@@ -49,11 +49,19 @@ class ArtifactSearchBuilder:  # pylint:disable=too-few-public-methods
     def _tags_query(self):
         if self.search == "":
             return {"match_all": {}}
-        tags_query = [
-            self._tags_multi_match(self.search),
-            self._tags_multi_match(self.synonyms, boost=self.SEARCH_CONFIG["synonyms_multiplier"]),
-        ]
+        tags_query = self._get_tags_query()
 
+        return tags_query
+
+    def _get_tags_query(self):
+        tags_query = []
+        for item in self.synonyms:
+            val = self.synonyms[item]
+            searchterm = item
+            prio = val["priority"]
+            amount = val["amount"]
+
+            tags_query.append(self._tags_multi_match(searchterm, prio))
         return tags_query
 
     def _tags_multi_match(self, search, boost=1.0):

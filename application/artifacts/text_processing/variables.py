@@ -73,6 +73,7 @@ def _get_lambda_string(func):
     return funcString.strip("['\\n']").split(" = ")[1]
 
 #### EXPORT ####
+MAXIMUM_AMOUNT = 50
 ALL_VARIABLES = {
     'Spellcheck': {
         'min confidence': SPELLCHECK_MIN_CONFIDENCE,
@@ -95,6 +96,21 @@ ALL_VARIABLES = {
         'function': _get_lambda_string(LEMMATIZATION_FUNCTION),
     },
     'Synonyms': {
+        'invalid characters': INVALID_CHARACTERS,
+        'min similarity': SYNONYMS_MIN_SIMILARITY,
+        'priority function': _get_lambda_string(SYNONYMS_PRIORITY_FUNCTION),
+    },
+    'Outer Synonyms': {
+        'invalid characters': INVALID_CHARACTERS,
+        'min similarity': SYNONYMS_MIN_SIMILARITY,
+        'priority function': _get_lambda_string(SYNONYMS_PRIORITY_FUNCTION),
+    },
+    'Synonyms 2': {
+        'invalid characters': INVALID_CHARACTERS,
+        'min similarity': SYNONYMS_MIN_SIMILARITY,
+        'priority function': _get_lambda_string(SYNONYMS_PRIORITY_FUNCTION),
+    },
+    'Outer Synonyms 2': {
         'invalid characters': INVALID_CHARACTERS,
         'min similarity': SYNONYMS_MIN_SIMILARITY,
         'priority function': _get_lambda_string(SYNONYMS_PRIORITY_FUNCTION),

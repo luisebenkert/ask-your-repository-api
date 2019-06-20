@@ -5,8 +5,6 @@ from application.artifacts.text_processing.utils import get_word, to_wordnet
 from application.artifacts.text_processing.variables import LEMMATIZATION_FUNCTION
 
 class Lemmatization(Node):
-  def _calculate_prio(self, old_prio, new_prio):
-    return LEMMATIZATION_FUNCTION
 
   def process(self, item):
     words = get_word(item)
@@ -23,7 +21,7 @@ class Lemmatization(Node):
           prio1 = item.get(word).get('priority')
           prio2 = item.get(new_word).get('priority')
           to_add[new_word] = {
-            'priority': self._calculate_prio(prio1, prio2),
+            'priority': max(prio1, prio2),
             'amount': item.get(word).get('amount') + 1
           }
           to_delete.append(word)

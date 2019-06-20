@@ -46,7 +46,7 @@ teams = {
 
 def to_json(pipeline, output, input, team, vars):
   date = datetime.datetime.now().strftime('%m%d_%H%M')
-  words = input[0].split()  
+  words = input[0].split()
   search_terms = ''
   for element in words:
     search_terms += '_' + element
@@ -76,4 +76,4 @@ def to_json(pipeline, output, input, team, vars):
     print('File was successfully created.')
 
 def sort_dict(dict):
-  return sorted(dict.items(), key=lambda element: (-element[1]['priority'], -element[1]['amount']))
+  return sorted(dict, key=lambda element: (-dict[element]['priority'], -dict[element]['amount']))
